@@ -1,0 +1,19 @@
+[[pages]]
+path  = "pages/eda.py"
+name = "Предобработка данных"
+icon = "📊"
+
+[[pages]]
+path = "pages/author_info.py"
+name = "Информация об авторе"
+icon = "🤠"
+
+[[pages]]
+path = "pages/models.py"
+name = "Модели"
+icon = "💡"
+
+[[pages]]
+path = "pages/about.py"
+name = "О сайте"
+icon = "❔"

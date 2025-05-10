@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import io
 
+
 def download_data(data, key):
     csv_buffer = io.StringIO()
     data.to_csv(csv_buffer, index=False)

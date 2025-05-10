@@ -1,16 +1,8 @@
 import streamlit as st
 import pandas as pd
-import io
-import folium 
 from streamlit_folium import folium_static
-import plotly.express as px
-import missingno as msno
-import matplotlib.pyplot as plt
 
-
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OneHotEncoder, StandardScaler, MinMaxScaler, LabelEncoder
-from components.visualisation import show_dataframe, plot_scatter, plot_hot_map, plot_histograms, plot_msno, plot_map
+from components.visualisation import show_dataframe, plot_scatter, plot_hot_map, plot_histograms, plot_msno, get_cached_map
 from components.utils import load_default_data, download_data
 from components.preprocessing import handle_missing_values, encoding_data
 from components.load import load_config
@@ -117,8 +109,11 @@ if 'df' in st.session_state:
         st.markdown(config['start_df']['describe_features'])
         
     with tab3:
-        mapa= plot_map(df)
-        folium_static(mapa)
+       show_map = st.button("Показать карту")
+       if show_map:
+            mapa = get_cached_map(df)
+            folium_static(mapa)
+       mapa = None
     with tab4:
         with st.expander("### **Корреляция числовых признаков**"):
             st.write(config['diagrams']['hot_map'])

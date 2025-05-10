@@ -4,6 +4,10 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
 import streamlit as st
 
+from components.utils import load_default_data
+
+from sklearn.model_selection import train_test_split
+
 def handle_missing_values(df, numerical_strategy='mean'):
     df_processed = df.copy()
     numerical_cols = df_processed.select_dtypes(include=['number']).columns
@@ -42,3 +46,12 @@ def encoding_data(data, encod_method):
             le = LabelEncoder()
             df_processed[col] = le.fit_transform(df_processed[col])
     return df_processed
+
+def get_test_samples():
+    df = load_default_data("src/result_mumbai.csv")
+    if 'Unnamed: 0' in df:
+        df = df.drop(columns=['Unnamed: 0'])
+    Y = df['price']
+    X = df.drop(['price'], axis =1)
+    _, X_test, _, Y_test = train_test_split(X,Y,test_size=0.2)
+    return X_test, Y_test

@@ -20,3 +20,5 @@ respect = st.button("Автор хорош!")
 if respect:
     st.balloons()
     st.success('Спасибо приятель! По всем вопросам пиши  [сюда](https://t.me/danya_skiba)')
+
+st.sidebar.write("[Исходный код](https://github.com/Danila-Skiba/Machine-Learning/tree/StreamLit_project)")

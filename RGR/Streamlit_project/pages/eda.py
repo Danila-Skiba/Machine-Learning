@@ -27,7 +27,6 @@ with st.sidebar:
    if st.button("Загрузить данные"):
       
        df = load_default_data("RGR/Streamlit_project/src/mumbai_regression.csv")
-       st.write(df)
        st.session_state.df = df
 
        if df is not None:
@@ -135,7 +134,7 @@ if 'df' in st.session_state:
     #Data preprocessing
 
     st.markdown("### Предобработанные данные")
-    my_data = load_default_data("src/result_mumbai.csv")
+    my_data = load_default_data("RGR/Streamlit_project/src/result_mumbai.csv")
     tab1, tab2, tab3, tab4 = st.tabs(['Данные','Тепловая карта',
     "Гистограммы",'Диаграмма рассеивания' ])
     with tab1:

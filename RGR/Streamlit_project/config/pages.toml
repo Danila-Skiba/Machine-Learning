@@ -1,5 +1,5 @@
 [[pages]]
-path  = "pages/eda.py"
+path = "pages/eda.py"
 name = "Предобработка данных"
 icon = "📊"
 

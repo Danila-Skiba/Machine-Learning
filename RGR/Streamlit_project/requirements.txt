@@ -1,0 +1,9 @@
+sklearn
+folium
+st-pages
+pandas
+numpy
+plotly
+matplotlib
+missingno
+scipy

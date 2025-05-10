@@ -38,9 +38,10 @@ def plot_sidebar_map():
     folium.LatLngPopup().add_to(m)
 
     with st.sidebar:
-        st.write("Выберите точку на карте:")
-        map_data = st_folium(m, width=400, height=300)
-        st.markdown("""
+        with st.sidebar.container(height=300):
+            st.write("Выберите точку на карте:")
+            map_data = st_folium(m, width=400, height=300)
+            st.markdown("""
     <style>
     .map_data {  /* Замените на реальный класс, если отличается */
     margin-bottom: 0 !important;

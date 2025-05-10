@@ -35,6 +35,10 @@ with st.expander(f"Больше информации о {name_eng}"):
 if "images_path" in  models[select_model]:
     st.image(image=models[select_model]['images_path'])
 
+#Model learn code
+st.header("Обучение модели")
+st.code(body=models[select_model]['learn_code'])
+
 #Model metrics
 st.header("Метрики модели")
 model = models[select_model]['model']

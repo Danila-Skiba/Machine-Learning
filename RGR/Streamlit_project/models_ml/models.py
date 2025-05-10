@@ -28,6 +28,7 @@ models = {
                 'MAPE': 0.69,
                 'R2': 0.66
             },
+            'learn_code': readme['linear']['learn_code'],
 
             'images_path': [f'{images_path}/lr.png']
         },
@@ -43,6 +44,8 @@ models = {
                 'MAPE': 0.45,
                 'R2': 0.88
             },
+
+            'learn_code': readme['br']['learn_code'],
             'images_path': [f"{images_path}/bg.png"]
         },
         'StackingRegression':{
@@ -57,6 +60,7 @@ models = {
                 'MAPE': 0.48,
                 'R2': 0.88
             },
+            'learn_code': readme['sr']['learn_code'],
             'images_path': [f"{images_path}/st.png"]
         },
         'GradientBoostingRegression': {
@@ -71,6 +75,7 @@ models = {
                 'MAPE': 0.46,
                 'R2': 0.90
             },
+            'learn_code': readme['gbr']['learn_code'],
             'images_path': [f"{images_path}/GBM.png"]
         },
         'CatBoostRegression':{
@@ -84,7 +89,8 @@ models = {
                 'RMSE': 10.34,
                 'MAPE': 0.54,
                 'R2': 0.84
-            }
+            },
+            'learn_code': readme['catboost']['learn_code']
         }
     }
 def get_models():

@@ -4,8 +4,20 @@
 # # secondaryBackgroundColor = "#385561"
 # # textColor = "#edf1f2"
 # # font = "sans serif"
+# [theme]
+# primaryColor = "#5681d0"
+# backgroundColor = "#212750"
+# secondaryBackgroundColor = "#1a1a3d"
+# textColor = "#f8f8f2"
+
+# [theme]
+# primaryColor = "#E85A4F"
+# backgroundColor = "#EAE7DC"
+# secondaryBackgroundColor = "#D8C3A5"
+# textColor = "rgb(21, 19, 19)"
+# font = "sans serif"
+
 [theme]
-primaryColor = "#5681d0"
-backgroundColor = "#212750"
-secondaryBackgroundColor = "#1a1a3d"
-textColor = "#f8f8f2"
+primaryColor = "#3AAFA9"
+backgroundColor = "#FEFFFF"
+secondaryBackgroundColor = "#DEF2F1"

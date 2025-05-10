@@ -8,6 +8,29 @@ description = """
     - ${x_1, x_2, ... x_n}$ - независимые переменные (остальные признаки)
 """
 
+learn_code = """
+#Побор гиперпараметров с помощью optuna
+def optuna_params(objective):
+    study = optuna.create_study(direction='minimize')
+    study.optimize(objective, n_trials=100)
+    best_params = study.best_params
+    return best_params
+
+def objective(trial):
+    alpha = trial.suggest_loguniform('alpha', 1e-5, 1e2)
+    model = Lasso(alpha=alpha)
+    model.fit(X_train, Y_train)
+    y_pred = model.predict(X_test)
+    mse = mean_squared_error(Y_test, y_pred)
+    return mse 
+
+#Обучение лучшей модели
+best_params = optuna_params(objective)
+best_model = Lasso(alpha=best_params['alpha'])
+best_model.fit(X_train,Y_train)
+
+"""
+
 [br]
 description = """
 **BaggingRegression** - метод, при котором для регрессии усредняются результаты нескольких моделей.
@@ -18,6 +41,26 @@ description = """
 - Снижает риск переобучения
 """
 
+learn_code = """
+#Подбор гиперпараметров с помощью RandomizedSearchSV
+def randomizedSearchCV_params(model, parameters, X_train, Y_train):
+    optimal = RandomizedSearchCV(model, parameters).fit(X_train, Y_train)
+    output = formated_params(optimal.best_params_)
+    return optimal.best_estimator_
+
+#Определение гиперпараметров
+br_params= {
+    'n_estimators':[10, 50, 100, 200],
+    'max_samples': [0.5, 0.7, 1.0],
+    'max_features': [0.5, 0.7, 1.0],
+    'bootstrap': [True, False],
+    'estimator': [dTR, None]
+}
+
+#Лучшая модель
+BR = randomizedSearchCV_params(BaggingRegressor(), br_params, X_train, y_train)
+"""
+
 [sr]
 description = """
 **StackingRegression** - метод, который комбинирует предсказания нескольких базовых моделей с помощью **мета-модели** (финального регрессора). 
@@ -26,6 +69,29 @@ description = """
 - Выбирается набор разных регрессеров, каждый из которых обучается на выборке
 - Предсказания всех моделей собираются в новый набор
 - Мета модель обучается на этом наборе, чтобы комбинировать предсказания и выдавать финальный результат
+"""
+
+
+learn_code = """
+#Подбор гиперпараметров с помощью GridSearchCV
+def gridSearchCV_params(model, parameters,X_train, Y_train):
+    optimal = GridSearchCV(model, parameters).fit(X_train, Y_train)
+    output = formated_params(optimal.best_params_)
+    return optimal.best_estimator_
+
+#Определение гиперпараметров
+estimators_SR = [
+    ('gbr', GradientBoostingRegressor(random_state=42)),
+    ('rf', RandomForestRegressor(random_state=42)),
+    ('svr', SVR())
+]
+SR_params = {
+    'cv': [3,5],
+    'passthrough': [True, False]
+}
+
+#Лучшая модель
+SR = gridSearchCV_params(StackingRegressor(estimators=estimators_SR, final_estimator=Ridge()), SR_params, X_train, y_train)
 """
 [gbr]
 description = """
@@ -38,6 +104,20 @@ description = """
 - **Финальное предсказание** - это взвешенная сумма предсказаний всех деревьев
 
 """
+learn_code = """
+
+#Определение гиперпараметров
+GBR_params = {
+    'n_estimators': [10, 50, 100],
+    'learning_rate': [0.01,0.05, 0.1, 0.2],
+    'max_depth': [3, 5 ,7],
+    'max_features': ['sqrt', 'log2', None]
+}
+
+#Лучшая модель, полученная на основе GridSearchSV
+GBR = gridSearchCV_params(GradientBoostingRegressor(), GBR_params, X_train, y_train)
+
+"""
 
 
 [catboost]
@@ -47,6 +127,19 @@ description = """
 **Характеристики метода**
 - Как в ```GradientBoosting``` **CatBoost** строит последовательность деревьер, минимизируя функцию потерь с помощью градиентного спуска
 - Встроенные механизмы борьбы с переобучением
+"""
+
+learn_code = """
+#Определение гиперпараметров
+CBR_params = {
+    'iterations': [200, 500,],
+    'depth': [3,5,7],
+    'learning_rate': [0.01,0,1],
+    'l2_leaf_reg': [1, 3],
+}
+
+#Лучшая модель, полученная на основе GridSearchSV
+CB_Regressor = gridSearchCV_params(CatBoostRegressor(), CBR_params, X_train_mumb, y_train_mumb)
 """
 [metrics]
 help = """

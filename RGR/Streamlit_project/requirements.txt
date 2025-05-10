@@ -1,6 +1,7 @@
-sklearn
+scikit-learn
 folium
 st-pages
+streamlit_folium
 pandas
 numpy
 plotly

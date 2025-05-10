@@ -26,7 +26,8 @@ st.sidebar.title("1. Загрузка данных")
 with st.sidebar:
    if st.button("Загрузить данные"):
       
-       df = load_default_data("src/mumbai_regression.csv")
+       df = load_default_data("RGR/Streamlit_project/src/mumbai_regression.csv")
+       st.write(df)
        st.session_state.df = df
 
        if df is not None:

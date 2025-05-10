@@ -8,8 +8,8 @@ st.divider()
 
 st.header("Тема Расчётно графической работы")
 st.subheader("_Разработка Web-приложения для инференса моделей ML и анализа данных_")
-st.sidebar.image(image="components/images/profil2.png", width=400)
+st.sidebar.image(image="RGR/Streamlit_project/components/images/profil2.png", width=400)
 show_next = st.sidebar.button("Показать ещё?")
 if show_next:
-    st.sidebar.image(image="components/images/profil3.png", width=600)
+    st.sidebar.image(image="RGR/Streamlit_project/components/images/profil3.png", width=600)
 

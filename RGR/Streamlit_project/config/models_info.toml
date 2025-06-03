@@ -162,6 +162,17 @@ params_neural ={
     "solver": ['lbfgs', 'sgd', 'adam'],
     'activation': ['relu', 'identity', 'logistic', 'tanh'],
 }
+
+# Подбор гиперпараметров
+def randomizedSearchCV_params(model, parameters, X_train, Y_train):
+    optimal = RandomizedSearchCV(model, parameters).fit(X_train, Y_train)
+    output = formated_params(optimal.best_params_)
+    print(f"Лучшие параметры для модели (RandomizedSearchCV) {output}")
+    return optimal.best_estimator_
+
+# Лучшая модель
+best_MLPReg_rand=  randomizedSearchCV_params(MLPRegressor(), parameters=params_neural, X_train=X_reg_train, Y_train=y_reg_train )
+
 """
 
 

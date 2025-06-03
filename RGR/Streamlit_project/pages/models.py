@@ -65,11 +65,12 @@ elif hide_map:
     map = None
 st.divider()
 
-with st.expander('Подробнее о графике'):
-    st.write(config['graphic']['distplot'])
-dist_plot_model = plot_distplot_regressors(regressors={f'{name_eng}': model}, 
-X_test=x_test, y_test=y_test,x_title= 'Price', y_title="Плотность", nameplot=config['graphic']['name'])
-st.plotly_chart(dist_plot_model)
+if name_eng != 'FCNN':
+    with st.expander('Подробнее о графике'):
+        st.write(config['graphic']['distplot'])
+    dist_plot_model = plot_distplot_regressors(regressors={f'{name_eng}': model}, 
+    X_test=x_test, y_test=y_test,x_title= 'Price', y_title="Плотность", nameplot=config['graphic']['name'])
+    st.plotly_chart(dist_plot_model)
 
 #Prediction
 st.sidebar.header("Заполнение данных", help=config['helps']['sidebar_help'])
@@ -84,11 +85,11 @@ values = get_data()
 y_user_pred = None
 try:
     x_vector_test = get_test_vector(values, clicked_lat, clicked_lon)
-    y_user_pred = model.predict(x_vector_test)[0]
+    y_user_pred = model.predict(x_vector_test)
     y_user_pred = y_user_pred if y_user_pred >0 else model_metrics['MAE']
 except:
     st.sidebar.error("Введите верные параметры")
 st.sidebar.divider()
 predict = st.sidebar.button("Предсказать стоимость")
 if predict and y_user_pred:
-    st.sidebar.header(f"Стоимость: ```{y_user_pred:.4f}``` млн рупий")
+    st.sidebar.header(f"Стоимость: ```{y_user_pred}``` млн рупий")

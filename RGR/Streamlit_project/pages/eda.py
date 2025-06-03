@@ -5,7 +5,7 @@ from streamlit_folium import folium_static
 from components.visualisation import show_dataframe, plot_scatter, plot_hot_map, plot_histograms, plot_msno, get_cached_map
 from components.utils import load_default_data, download_data
 from components.preprocessing import handle_missing_values, encoding_data
-from components.load import load_config
+from components.load import load_config, get_project_root
 
 config = load_config("eda_readme.toml")
 
@@ -26,7 +26,7 @@ st.sidebar.title("1. Загрузка данных")
 with st.sidebar:
    if st.button("Загрузить данные"):
       
-       df = load_default_data("RGR/Streamlit_project/src/mumbai_regression.csv")
+       df = load_default_data(f"{get_project_root()}/src/mumbai_regression.csv")
        st.session_state.df = df
 
        if df is not None:
@@ -134,7 +134,7 @@ if 'df' in st.session_state:
     #Data preprocessing
 
     st.markdown("### Предобработанные данные")
-    my_data = load_default_data("RGR/Streamlit_project/src/result_mumbai.csv")
+    my_data = load_default_data(f"{get_project_root()}/src/result_mumbai.csv")
     tab1, tab2, tab3, tab4 = st.tabs(['Данные','Тепловая карта',
     "Гистограммы",'Диаграмма рассеивания' ])
     with tab1:

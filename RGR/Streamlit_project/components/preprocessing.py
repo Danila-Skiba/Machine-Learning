@@ -5,6 +5,7 @@ from sklearn.preprocessing import OneHotEncoder
 import streamlit as st
 
 from components.utils import load_default_data
+from components.load import get_project_root
 
 from sklearn.model_selection import train_test_split
 
@@ -48,7 +49,8 @@ def encoding_data(data, encod_method):
     return df_processed
 
 def get_test_samples():
-    df = load_default_data("RGR/Streamlit_project/src/result_mumbai.csv")
+    root = get_project_root()
+    df = load_default_data(f"{root}/src/result_mumbai.csv")
     if 'Unnamed: 0' in df:
         df = df.drop(columns=['Unnamed: 0'])
     Y = df['price']

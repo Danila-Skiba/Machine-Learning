@@ -32,9 +32,9 @@ def randomizedSearchCV_params(model, parameters, X_train, Y_train):
 
 import optuna
 
-def optuna_params(objective, aim):
+def optuna_params(objective, aim, n_trials= 100):
     optuna.logging.set_verbosity(optuna.logging.WARNING)
     study = optuna.create_study(direction=aim)
-    study.optimize(objective, n_trials=100)
+    study.optimize(objective, n_trials=n_trials)
     best_params = study.best_params
     return best_params

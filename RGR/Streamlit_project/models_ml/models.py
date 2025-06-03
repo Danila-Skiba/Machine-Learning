@@ -13,6 +13,7 @@ LR = load(f'{root}/models_ml/LinearRegression.joblib')
 SR = load(f'{root}/models_ml/SR_model.joblib')
 CatBoost = load(f'{root}/models_ml/CatBoostR_model.joblib')
 GBR = load(f'{root}/models_ml/GBR_model.joblib')
+FCNN = load(f'{root}/models_ml/MLPRegressor_rand.joblib')
 
 readme = load_config("models_info.toml")
 models = {
@@ -91,7 +92,23 @@ models = {
                 'R2': 0.84
             },
             'learn_code': readme['catboost']['learn_code']
+        },
+
+         'FCNN':{
+            'name_ru': "Полносвязная нейронная сеть",
+            'name_eng': 'FCNN',
+            'model': FCNN, 
+            'info': readme['fcnn']['description'],
+            "metrics":{
+                'MAE': 10.07,
+                "MSE": 292.92,
+                "RMSE": 17.11,
+                "MAPE": 0.5,
+                "R2": 0.59,
+            },
+            'learn_code': readme['fcnn']['learn_code']
         }
+
     }
 def get_models():
     return models

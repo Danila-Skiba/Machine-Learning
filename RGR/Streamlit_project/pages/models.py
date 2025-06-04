@@ -106,15 +106,15 @@ with tab1:
 with tab2:
     select_dataset_key = st.selectbox("Выберите данные", [key for key in datasets.keys()], help=config['helps']['subsamples'])
     dataset = datasets[select_dataset_key]
-    tab3, tab4 = st.tabs(['Метрики','Гистограммы выборки'])
+    tab3, tab4 = st.tabs(['Метрики','Данные'])
 
     with tab3: 
-        st.data_editor(dataset)
         y_sample_pred = model.predict(dataset)
         y_true = get_true_Y()[select_dataset_key]
         metrics = get_metrics(y_true=y_true, y_pred=y_sample_pred)
         show_model_metrics(metrics)
-    with tab4: 
         fig  = px.histogram(dataset, x = 'area', title="Распределение по area (площади)", nbins=100)
         st.plotly_chart(fig, use_container_width=True)
+    with tab4: 
+        st.data_editor(dataset)
         

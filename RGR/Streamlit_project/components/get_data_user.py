@@ -37,8 +37,7 @@ def plot_sidebar_map():
 
     folium.LatLngPopup().add_to(m)
 
-    with st.sidebar:
-        with st.sidebar.container(height=300):
+    with st.container(height=300):
             st.write("Выберите точку на карте:")
             map_data = st_folium(m, width=400, height=300)
             st.markdown("""
@@ -56,10 +55,10 @@ def plot_sidebar_map():
         if is_within_border(clicked_lat, clicked_lon, borders):
             st.session_state.latitude = clicked_lat
             st.session_state.longitude = clicked_lon
-            st.sidebar.success(f"Точка выбрана: latitude = {clicked_lat:.4f}, longitude = {clicked_lon:.4f}")
+            st.success(f"Точка выбрана: latitude = {clicked_lat:.4f}, longitude = {clicked_lon:.4f}")
             return clicked_lat, clicked_lon
         else:
-            st.sidebar.error("Выбранная точка находится за пределами допустимой области!")
+            st.error("Выбранная точка находится за пределами допустимой области!")
  
     return None, None
     
@@ -67,38 +66,38 @@ def plot_sidebar_map():
 
 def get_data():
 
-    st.sidebar.subheader("Площадь жилья", help="кв.м")
-    select_area = st.sidebar.slider("```area```", 500, 8000)
+    st.subheader("Площадь жилья", help="кв.м")
+    select_area = st.slider("```area```", 500, 8000)
 
-    st.sidebar.subheader("Количество балконов")
-    select_balcony = st.sidebar.slider("```balcony```",0,20)
+    st.subheader("Количество балконов")
+    select_balcony = st.slider("```balcony```",0,20)
 
-    st.sidebar.subheader("Количество спальнь")
-    select_bedrooms = st.sidebar.slider("```bedrooms```",0,20)
+    st.subheader("Количество спальнь")
+    select_bedrooms = st.slider("```bedrooms```",0,20)
 
-    st.sidebar.subheader("Количество душевых")
-    select_bathrooms = st.sidebar.slider("```bathrooms```",0,20)
+    st.subheader("Количество душевых")
+    select_bathrooms = st.slider("```bathrooms```",0,20)
 
-    st.sidebar.subheader("Готов для заселения?")
-    select_ready_to_move = st.sidebar.selectbox("```ready_to_move```", ["Да", "Нет"])
+    st.subheader("Готов для заселения?")
+    select_ready_to_move = st.selectbox("```ready_to_move```", ["Да", "Нет"])
     ready_to_move = 1 if select_ready_to_move == "Да" else 0
 
-    st.sidebar.subheader("Статус жилья")
-    select_new_or_old = st.sidebar.selectbox("```new_or_old```", ['Новое', "Вторичное"])
+    st.subheader("Статус жилья")
+    select_new_or_old = st.selectbox("```new_or_old```", ['Новое', "Вторичное"])
     new_or_old =  1 if select_new_or_old == "Новое" else 0
 
-    st.sidebar.subheader("Количество парквочных мест")
-    select_parking = st.sidebar.slider("```parking```",0,10)
+    st.subheader("Количество парквочных мест")
+    select_parking = st.slider("```parking```",0,10)
 
-    st.sidebar.subheader("Количество лифтов")
-    select_lift = st.sidebar.slider("```lift```", 0,10)
+    st.subheader("Количество лифтов")
+    select_lift = st.slider("```lift```", 0,10)
 
-    st.sidebar.subheader("Тип жилья")
-    select_flat_or_individ = st.sidebar.selectbox("```flat_or_individual```", ["Квартира", "Частный дом"])
+    st.subheader("Тип жилья")
+    select_flat_or_individ = st.selectbox("```flat_or_individual```", ["Квартира", "Частный дом"])
     flat_or_individ = 1 if select_flat_or_individ == "Квартира" else 0
 
-    st.sidebar.subheader("Статус обустройства жилья", help="Обстановка мебелью/бытовой техникой")
-    select_furn_status = st.sidebar.selectbox("```furnished_status```", ['Обустроено', "Не обустроено"])
+    st.subheader("Статус обустройства жилья", help="Обстановка мебелью/бытовой техникой")
+    select_furn_status = st.selectbox("```furnished_status```", ['Обустроено', "Не обустроено"])
 
     furn_status_semi = 1 if select_furn_status == "Обустроено" else 0
     furn_status_unfurn = 1 if select_furn_status == "Не обустроено" else 0

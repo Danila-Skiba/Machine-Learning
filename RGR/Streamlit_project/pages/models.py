@@ -1,11 +1,14 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
+from components.metrics import get_metrics
 from components.preprocessing import get_test_samples
 from components.visualisation import show_model_metrics, plot_map_accuracy_model, plot_distplot_regressors
 from components.get_data_user import get_data, plot_sidebar_map, get_test_vector
 from components.load import load_config
 from models_ml.models import get_models
+from models_ml.datasets import get_datasets_X, get_true_Y
+import plotly.express as px
 
 from streamlit_folium import folium_static
 
@@ -13,6 +16,8 @@ from streamlit_folium import folium_static
 config = load_config("model_readme.toml")
 config_models = load_config("models_info.toml")
 
+
+datasets = get_datasets_X()
 models = get_models()
 
 x_test, y_test = get_test_samples()
@@ -73,23 +78,43 @@ if name_eng != 'FCNN':
     st.plotly_chart(dist_plot_model)
 
 #Prediction
-st.sidebar.header("Заполнение данных", help=config['helps']['sidebar_help'])
-st.sidebar.subheader("Локация на карте")
-if 'latitude' not in st.session_state:
-    st.session_state.latitude = None
-if 'longitude' not in st.session_state:
-    st.session_state.longitude = None
-clicked_lat, clicked_lon = plot_sidebar_map()
-st.sidebar.divider()
-values = get_data()
-y_user_pred = None
-try:
-    x_vector_test = get_test_vector(values, clicked_lat, clicked_lon)
-    y_user_pred = model.predict(x_vector_test)
-    y_user_pred = y_user_pred if y_user_pred >0 else model_metrics['MAE']
-except:
-    st.sidebar.error("Введите верные параметры")
-st.sidebar.divider()
-predict = st.sidebar.button("Предсказать стоимость")
-if predict and y_user_pred:
-    st.sidebar.header(f"Стоимость: ```{y_user_pred}``` млн рупий")
+
+tab1, tab2 = st.sidebar.tabs(['Единичный пример', 'Выборка'])
+
+with tab1:
+    st.header("Заполнение данных", help=config['helps']['sidebar_help'])
+    st.subheader("Локация на карте")
+    if 'latitude' not in st.session_state:
+        st.session_state.latitude = None
+    if 'longitude' not in st.session_state:
+        st.session_state.longitude = None
+    clicked_lat, clicked_lon = plot_sidebar_map()
+    st.divider()
+    values = get_data()
+    y_user_pred = None
+    try:
+        x_vector_test = get_test_vector(values, clicked_lat, clicked_lon)
+        y_user_pred = model.predict(x_vector_test)
+        y_user_pred = y_user_pred if y_user_pred >0 else model_metrics['MAE']
+    except:
+        st.error("Введите верные параметры")
+    st.divider()
+    predict = st.button("Предсказать стоимость")
+    if predict and y_user_pred:
+        st.header(f"Стоимость: ```{y_user_pred}``` млн рупий")
+
+with tab2:
+    select_dataset_key = st.selectbox("Выберите данные", [key for key in datasets.keys()], help=config['helps']['subsamples'])
+    dataset = datasets[select_dataset_key]
+    tab3, tab4 = st.tabs(['Метрики','Гистограммы выборки'])
+
+    with tab3: 
+        st.data_editor(dataset)
+        y_sample_pred = model.predict(dataset)
+        y_true = get_true_Y()[select_dataset_key]
+        metrics = get_metrics(y_true=y_true, y_pred=y_sample_pred)
+        show_model_metrics(metrics)
+    with tab4: 
+        fig  = px.histogram(dataset, x = 'area', title="Распределение по area (площади)", nbins=100)
+        st.plotly_chart(fig, use_container_width=True)
+        

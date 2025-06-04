@@ -59,21 +59,6 @@
 - **matplotlib/seaborn** — визуализации
 - **Folium** — карты
 
-## Установка локально
-
-1. Клонируйте репозиторий:
-   ```bash
-   git clone <ссылка_на_репозиторий>
-   ```
-2. Установите зависимости:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Запустите приложение:
-   ```bash
-   streamlit run app.py
-   ```
-
 ---
 
 **Ссылка на приложение:** [Streamlit App](https://danila-skiba-machine-learning-rgrstreamlit-projectapp-st-wd2tai.streamlit.app/)  

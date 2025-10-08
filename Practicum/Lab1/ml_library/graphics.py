@@ -95,6 +95,30 @@ def plot_distplot_regressors(regressors, X_test, y_test,x_title,  y_title, namep
 
     return fig 
         
+def plot_regression_actual(model, x_test, y_test):
+    y_pred = model.predict(x_test)
+    plt.figure(figsize=(12,6))
+    plt.scatter(y_pred, y_test, alpha = 0.6)
+    max_val = y_test.max()
+    min_val = y_test.min()
+    plt.plot([min_val, max_val], [min_val, max_val], 'r--')
+    plt.xlabel('Predicted Values')
+    plt.ylabel('Actual')
+    plt.grid(True)
+    plt.show()
+    
+def plot_regression_residuals(model, x_test, y_test):
+    y_pred = model.predict(x_test)
+    residuals = y_test - y_pred
+    plt.figure(figsize=(12,6))
+    plt.scatter(y_pred, residuals, alpha = 0.6)
+    plt.axhline(y=0, color='red', linestyle='--', linewidth=2)
+    plt.xlabel('Predicted Values')
+    plt.ylabel('Residuals')
+    plt.grid(True)
+    plt.show()
+    
+
 
     
 

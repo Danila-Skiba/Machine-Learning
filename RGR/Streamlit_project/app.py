@@ -1,4 +1,5 @@
 import streamlit as st
+
 nav = [
     st.Page("pages/eda.py", title="Предобработка данных", icon="📊"),
     st.Page("pages/author_info.py", title="Информация об авторе", icon="🤠"),

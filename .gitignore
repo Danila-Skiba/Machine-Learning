@@ -1,0 +1,8 @@
+bin/
+data/
+etc/
+include/
+lib/
+share/
+*.cfg
+requirements.txt
